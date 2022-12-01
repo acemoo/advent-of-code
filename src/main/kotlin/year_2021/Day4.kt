@@ -39,7 +39,7 @@ class Day4(year: Int): Day(year, 4) {
         throw Exception("No winners!")
     }
 
-    fun generateBoards(input: List<String>) =
+    private fun generateBoards(input: List<String>) =
         input
             .drop(2)
             .groupConsecutiveBy { it.isNotBlank() }
@@ -57,7 +57,7 @@ data class Board(
     private val rows: List<List<Int>>,
 ) {
     private val board: List<MutableList<Number>> = rows
-        .map { it.map { Number(it) }.toMutableList() }
+        .map { row -> row.map { column -> Number(column) }.toMutableList() }
 
     fun markNumber(calledNumber: Int) {
         for (rows in board) {
@@ -72,13 +72,13 @@ data class Board(
     fun isWinner() =
         hasWinningColumn() || hasWinningRow()
 
-    fun hasWinningRow() =
+    private fun hasWinningRow() =
         board
             .any { row ->
                 row.all { it.marked }
             }
 
-    fun hasWinningColumn(): Boolean {
+    private fun hasWinningColumn(): Boolean {
         for (row in board[0].indices) {
             val allMarked = board.indices.all { column ->
                 board[column][row].marked

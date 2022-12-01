@@ -22,7 +22,6 @@ abstract class Day(
         return time1 + time2
     }
 
-    @OptIn(ExperimentalTime::class)
     private fun printResult(year: Int, day: Int, result: Any, time: Duration) =
         println("$year  ${day.toString().padStart(2, '0')}.1:  ${result.toString().padEnd(50)} $time")
 

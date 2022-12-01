@@ -5,7 +5,7 @@ import Day
 class Day3(year: Int) : Day(year, 3) {
     override fun solvePart1(input: List<String>) =
         input
-            .map { it.map { it - '0' } }
+            .map { line -> line.map { char -> char - '0' } }
             .reduce { total, next ->
                 total.mapIndexed { index, i ->
                     i + next[index]
@@ -35,7 +35,7 @@ class Day3(year: Int) : Day(year, 3) {
              .toInt(2)
 
     private fun mapToListOfInts(input: List<String>) =
-        input.map { it.map { it - '0' } }
+        input.map { line -> line.map { char -> char - '0' } }
 
     private fun oxygenGeneratorRating(input: List<List<Int>>) =
         filterOxygen(input,0)
