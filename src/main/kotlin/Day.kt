@@ -22,8 +22,9 @@ abstract class Day(
         return time1 + time2
     }
 
-    private fun printResult(year: Int, day: Int, result: Any, time: Duration) =
-        println("$year  ${day.toString().padStart(2, '0')}.1:  ${result.toString().padEnd(50)} $time")
+    private fun printResult(year: Int, day: Int, result: Any, time: Duration) {
+        println("$year  ${day.toString().padStart(2, '0')}.1:  ${result.toString().padEnd(46)} ${time.toString().padStart(12)}")
+    }
 
     abstract fun solvePart1(input: List<String>): Any
     abstract fun solvePart2(input: List<String>): Any
@@ -35,5 +36,19 @@ abstract class Day(
             return File(resource.file).readLines()
         }
         throw Exception("File not found $filename")
+    }
+
+    private fun StringBuilder.appendFractional(whole: Int, fractional: Int, fractionalSize: Int, unit: String, isoZeroes: Boolean) {
+        append(whole)
+        if (fractional != 0) {
+            append('.')
+            val fracString = fractional.toString().padStart(fractionalSize, '0')
+            val nonZeroDigits = fracString.indexOfLast { it != '0' } + 1
+            when {
+                !isoZeroes && nonZeroDigits < 3 -> appendRange(fracString, 0, nonZeroDigits)
+                else -> appendRange(fracString, 0, ((nonZeroDigits + 2) / 3) * 3)
+            }
+        }
+        append(unit)
     }
 }

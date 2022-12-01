@@ -8,8 +8,8 @@ abstract class Year(
             .fold(Duration.ZERO) { sum, element ->
                 sum + element
             }
-        println("".padEnd(70, '-'))
-        println(totalTime.toString().padStart(70))
+        println("".padEnd(72, '-'))
+        println(totalTime.toString().padStart(72))
         println()
         println()
     }
