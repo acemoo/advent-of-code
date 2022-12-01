@@ -1,11 +1,16 @@
-import year_2021.Day1
-import year_2021.Day2
-import year_2021.Day3
-import year_2021.Day4
+import year_2022.Day1
 
 fun main() {
     Day1().solve()
-    Day2().solve()
-    Day3().solve()
-    Day4().solve()
+}
+
+fun year2022() {
+
+}
+
+fun year2021() {
+    year_2021.Day1().solve()
+    year_2021.Day2().solve()
+    year_2021.Day4().solve()
+    year_2021.Day3().solve()
 }
