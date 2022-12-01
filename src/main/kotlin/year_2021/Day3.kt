@@ -1,8 +1,6 @@
 package year_2021
 
-import Day
-
-class Day3(year: Int) : Day(year, 3) {
+class Day3: Day(3) {
     override fun solvePart1(input: List<String>) =
         input
             .map { line -> line.map { char -> char - '0' } }

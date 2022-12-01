@@ -4,7 +4,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class Day3Test {
-    private val day3 = Day3(2021)
+    private val day3 = Day3()
     private val input = day3.getInput()
 
     @Test
