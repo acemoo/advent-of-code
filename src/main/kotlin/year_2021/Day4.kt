@@ -1,8 +1,9 @@
 package year_2021
 
+import Day
 import groupConsecutiveBy
 
-class Day4: Day(4) {
+class Day4(year: Int): Day(year, 4) {
     override fun solvePart1(input: List<String>): Any {
         val numbers = input.first().split(",").map { it.toInt() }
         val boards = generateBoards(input)

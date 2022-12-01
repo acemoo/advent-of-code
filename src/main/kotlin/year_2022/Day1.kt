@@ -1,8 +1,9 @@
 package year_2022
 
+import Day
 import groupConsecutiveBy
 
-class Day1: Day(1) {
+class Day1(year: Int): Day(year, 1) {
     override fun solvePart1(input: List<String>) =
         input
             .groupConsecutiveBy { it.isNotBlank() }

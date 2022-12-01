@@ -1,6 +1,8 @@
 package year_2021
 
-class Day1: Day(1) {
+import Day
+
+class Day1(year: Int): Day(year, 1) {
 
     override fun solvePart1(input: List<String>) =
         input

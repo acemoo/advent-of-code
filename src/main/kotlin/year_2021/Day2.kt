@@ -1,6 +1,8 @@
 package year_2021
 
-class Day2: Day(2) {
+import Day
+
+class Day2(year: Int): Day(year, 2) {
     override fun solvePart1(input: List<String>) =
         input
             .map { it.split(" ") }
