@@ -15,15 +15,19 @@ abstract class Day(
             solvePart1(getInput())
         }
         val (result2, time2) = measureTimedValue {
-            solvePart2(getInput())
+            try {
+                solvePart2(getInput())
+            } catch (e: NotImplementedError) {
+                "NotImplemented"
+            }
         }
-        printResult(year, day, result1, time1)
-        printResult(year, day, result2, time2)
+        printResult(year, day, 1, result1, time1)
+        printResult(year, day, 2, result2, time2)
         return time1 + time2
     }
 
-    private fun printResult(year: Int, day: Int, result: Any, time: Duration) {
-        println("$year  ${day.toString().padStart(2, '0')}.1:  ${result.toString().padEnd(46)} ${time.toString().padStart(12)}")
+    private fun printResult(year: Int, day: Int, part: Int, result: Any, time: Duration) {
+        println("$year  ${day.toString().padStart(2, '0')}.$part:  ${result.toString().padEnd(46)} ${time.toString().padStart(12)}")
     }
 
     abstract fun solvePart1(input: List<String>): Any
