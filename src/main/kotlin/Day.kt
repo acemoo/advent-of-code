@@ -33,6 +33,12 @@ abstract class Day(
     abstract fun solvePart1(input: List<String>): Any
     abstract fun solvePart2(input: List<String>): Any
 
+    fun solvePart1(input: String) =
+        solvePart1(listOf(input))
+
+    fun solvePart2(input: String) =
+        solvePart2(listOf(input))
+
     fun getInput(): List<String> {
         val filename = "year_$year/input_day_$day.txt"
         val resource = {}::class.java.getResource(filename)

@@ -5,5 +5,6 @@ import Year
 class Year2015: Year(
     listOf(
         Day1(),
+        Day2(),
     )
 )
