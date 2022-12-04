@@ -5,5 +5,6 @@ class Year2022: Year(
     listOf(
         Day1(),
         Day2(),
+        Day3(),
     )
 )

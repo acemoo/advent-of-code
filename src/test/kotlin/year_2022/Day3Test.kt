@@ -1,10 +1,10 @@
-package year_2021
+package year_2022
 
 import AbstractDayTest
 
-class Day3Test:
+internal class Day3Test:
     AbstractDayTest(
         Day3(),
-        198,
-        230,
+        157,
+        70,
     )
