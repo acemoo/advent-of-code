@@ -6,5 +6,6 @@ class Year2022: Year(
         Day1(),
         Day2(),
         Day3(),
+        Day4(),
     )
 )
