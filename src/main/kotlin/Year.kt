@@ -5,6 +5,7 @@ class Year {
 
     fun add(day: Day) {
         days.add(day)
+        days.sortBy { it.day }
     }
 
     fun solve() {

@@ -6,7 +6,7 @@ import kotlin.time.measureTimedValue
 
 abstract class Day(
     private val year: Int,
-    private val day: Int
+    val day: Int
 ) {
 
     @OptIn(ExperimentalTime::class)
