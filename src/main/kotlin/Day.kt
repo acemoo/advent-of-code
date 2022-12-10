@@ -27,7 +27,15 @@ abstract class Day(
     }
 
     private fun printResult(year: Int, day: Int, part: Int, result: Any, time: Duration) {
-        println("$year  ${day.toString().padStart(2, '0')}.$part:  ${result.toString().padEnd(46)} ${time.toString().padStart(12)}")
+        when (result) {
+            is List<*> -> printListResult(year, day, part, result, time)
+            else -> println("$year  ${day.toString().padStart(2, '0')}.$part:  ${result.toString().padEnd(46)} ${time.toString().padStart(12)}")
+        }
+    }
+
+    private fun printListResult(year: Int, day: Int, part: Int, result: List<*>, time: Duration) {
+        println("$year  ${day.toString().padStart(2, '0')}.$part:  ${"".padEnd(46)} ${time.toString().padStart(12)}")
+        result.forEach(::println)
     }
 
     abstract fun solvePart1(input: List<String>): Any
