@@ -6,15 +6,13 @@ abstract class AbstractDayTest(
     private val result1: Any,
     private val result2: Any,
 ) {
-    private val input = day.getInput()
-
     @Test
     fun solvePart1() {
-        assertThat(day.solvePart1(input)).isEqualTo(result1)
+        assertThat(day.solvePart1(day.getInput())).isEqualTo(result1)
     }
 
     @Test
     fun solvePart2() {
-        assertThat(day.solvePart2(input)).isEqualTo(result2)
+        assertThat(day.solvePart2(day.getInput(2))).isEqualTo(result2)
     }
 }

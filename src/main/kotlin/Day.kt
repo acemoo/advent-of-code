@@ -16,7 +16,7 @@ abstract class Day(
         }
         val (result2, time2) = measureTimedValue {
             try {
-                solvePart2(getInput())
+                solvePart2(getInput(2))
             } catch (e: NotImplementedError) {
                 "NotImplemented"
             }
@@ -47,13 +47,18 @@ abstract class Day(
     fun solvePart2(input: String) =
         solvePart2(listOf(input))
 
-    fun getInput(): List<String> {
-        val filename = "year_$year/input_day_$day.txt"
-        val resource = {}::class.java.getResource(filename)
+    fun getInput(part: Int? = null): List<String> {
+        if (part != null) {
+            val resource = {}::class.java.getResource("year_$year/input_day_${day}_$part.txt")
+            if (resource?.file != null) {
+                return File(resource.file).readLines()
+            }
+        }
+        val resource = {}::class.java.getResource("year_$year/input_day_$day.txt")
         if (resource?.file != null) {
             return File(resource.file).readLines()
         }
-        throw Exception("File not found $filename")
+        throw Exception("File not found year: $year, day: $day, part: $part")
     }
 
     private fun StringBuilder.appendFractional(whole: Int, fractional: Int, fractionalSize: Int, unit: String, isoZeroes: Boolean) {
