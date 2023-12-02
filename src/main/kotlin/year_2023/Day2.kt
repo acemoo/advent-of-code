@@ -32,16 +32,13 @@ data class Game(
             val idAndValues = line.substring(4)
                 .split(":", ",", ";")
                 .map { it.split(" ") }
+
             val maxValues = idAndValues.drop(1)
                 .groupingBy { it.last() }
                 .fold(0) { maxCubeCount: Int, element: List<String> ->
-                    val currentCubeCount = element[1].toInt()
-                    if (maxCubeCount > currentCubeCount) {
-                        maxCubeCount
-                    } else {
-                        currentCubeCount
-                    }
+                    maxOf(maxCubeCount, element[1].toInt())
                 }
+
             return Game(
                 id = idAndValues.first().last().toInt(),
                 minimumRed = maxValues["red"] ?: 0,
