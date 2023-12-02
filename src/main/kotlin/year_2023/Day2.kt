@@ -29,7 +29,7 @@ data class Game(
 ) {
     companion object {
         fun parseLine(line: String): Game {
-            val idAndValues = line.substringAfter("Game ")
+            val idAndValues = line.substring(4)
                 .split(":", ",", ";")
                 .map { it.split(" ") }
             val maxValues = idAndValues.drop(1)
