@@ -6,39 +6,60 @@ class Day3 : Day(3) {
             .getNumbersTouchingSymbols()
             .sumOf { it.intVal }
 
-    override fun solvePart2(input: List<String>): Any {
-        TODO("Not yet implemented")
-    }
+    override fun solvePart2(input: List<String>) =
+        Schematic.parseLines(input)
+            .getGearRatios()
+            .sum()
 }
 
 data class Schematic(
     val grid: Grid,
-    val numbers: List<Number>
+    val numbers: List<Number>,
+    val symbols: List<Symbol>,
 ) {
     companion object {
         fun parseLines(lines: List<String>): Schematic {
             val grid = Grid.parseLines(lines)
-            val numbers = grid.groupedLines.flatMap { itemGroups ->
-                itemGroups.groups.mapNotNull { itemGroup ->
+            val numbers = mutableListOf<Number>()
+            val symbols = mutableListOf<Symbol>()
+            grid.groupedLines.forEach { itemGroups ->
+                itemGroups.groups.forEach { itemGroup ->
                     when (itemGroup.type) {
-                        "digit" -> Number(
-                            itemGroup.items.map { it as Digit }
-                                .fold(0) { acc: Int, digit: Digit ->
-                                    acc * 10 + digit.intVal
-                                },
-                            itemGroup.items
+                        "digit" -> numbers.add(
+                            Number(
+                                itemGroup.items.map { it as Digit }
+                                    .fold(0) { acc: Int, digit: Digit ->
+                                        acc * 10 + digit.intVal
+                                    },
+                                itemGroup.items
+                            )
                         )
-                        else -> null
+                        "symbol" -> symbols.addAll(itemGroup.items.map { it as Symbol })
                     }
                 }
             }
-            return Schematic(grid, numbers)
+            return Schematic(grid, numbers, symbols)
         }
     }
 
     fun getNumbersTouchingSymbols() =
         numbers.filter { number ->
             number.items.any { grid.touches(it, "symbol") }
+        }
+
+    fun getGearRatios() =
+        symbols.mapNotNull { symbol: Symbol ->
+            val touchingNumbers = numbers.filter { number ->
+                symbol.touchesAny(number.items)
+            }
+
+            if (touchingNumbers.size > 1) {
+                touchingNumbers.fold(1) { acc, number ->
+                    acc * number.intVal
+                }
+            } else {
+                null
+            }
         }
 }
 
@@ -73,23 +94,39 @@ data class Grid(
     val groupedLines: List<ItemGroups>,
 ) {
     fun touches(item: Item, type: String) =
-        touchesHorizontal(item, type) ||
-                touchesVertical(item, type) ||
-                touchesDiagonal(item, type)
+        touchCount(item, type) > 0
 
-    private fun touchesHorizontal(item: Item, type: String) =
-        grid[item.left()]?.type == type ||
-                grid[item.right()]?.type == type
+    fun touchCount(item: Item, type: String) =
+        touchCountHorizontal(item, type) +
+                touchCountVertical(item, type) +
+                touchCountDiagonal(item, type)
 
-    private fun touchesVertical(item: Item, type: String) =
-        grid[item.above()]?.type == type ||
-                grid[item.below()]?.type == type
+    fun touchCountHorizontal(item: Item, type: String) =
+        countType(
+            type,
+            grid[item.left()],
+            grid[item.right()],
+        )
 
-    private fun touchesDiagonal(item: Item, type: String) =
-        grid[item.aboveAndRight()]?.type == type ||
-                grid[item.aboveAndLeft()]?.type == type ||
-                grid[item.belowAndRight()]?.type == type ||
-                grid[item.belowAndLeft()]?.type == type
+    fun touchCountVertical(item: Item, type: String) =
+        countType(
+            type,
+            grid[item.above()],
+            grid[item.below()],
+        )
+
+    fun touchCountDiagonal(item: Item, type: String) =
+        countType(
+            type,
+            grid[item.aboveAndRight()],
+            grid[item.aboveAndLeft()],
+            grid[item.belowAndRight()],
+            grid[item.belowAndLeft()],
+        )
+
+    private fun countType(type: String, vararg items: Item?) =
+        items.count { it?.type == type }
+
     companion object {
         fun parseLines(lines: List<String>): Grid {
             val grid = mutableMapOf<Location, Item>()
@@ -150,12 +187,23 @@ data class Location(
 
     fun belowAndLeft() =
         Location(x + 1, y - 1)
+
+    fun touches(otherLocation: Location) =
+        otherLocation.x in x - 1 .. x + 1 &&
+                otherLocation.y in y - 1 .. y + 1
 }
 
 sealed class Item(
     private val location: Location,
     val type: String // TODO: can we make this strongly typed? (probably by making the class non-sealed and typed: class Item<T>
 ) {
+    fun touchesAny(items: List<Item>): Boolean {
+        return items.any { it.touches(location) }
+    }
+
+    fun touches(otherLocation: Location) =
+        location.touches(otherLocation)
+
     fun left() =
         location.left()
 
