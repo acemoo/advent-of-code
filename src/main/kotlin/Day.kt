@@ -1,7 +1,6 @@
 
 import java.io.File
 import kotlin.time.Duration
-import kotlin.time.ExperimentalTime
 import kotlin.time.measureTimedValue
 
 abstract class Day(
@@ -9,7 +8,6 @@ abstract class Day(
     val day: Int
 ) {
 
-    @OptIn(ExperimentalTime::class)
     fun solve(): Duration {
         val (result1, time1) = measureTimedValue {
             solvePart1(getInput())

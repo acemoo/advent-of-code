@@ -96,26 +96,26 @@ data class Grid(
     fun touches(item: Item, type: String) =
         touchCount(item, type) > 0
 
-    fun touchCount(item: Item, type: String) =
+    private fun touchCount(item: Item, type: String) =
         touchCountHorizontal(item, type) +
                 touchCountVertical(item, type) +
                 touchCountDiagonal(item, type)
 
-    fun touchCountHorizontal(item: Item, type: String) =
+    private fun touchCountHorizontal(item: Item, type: String) =
         countType(
             type,
             grid[item.left()],
             grid[item.right()],
         )
 
-    fun touchCountVertical(item: Item, type: String) =
+    private fun touchCountVertical(item: Item, type: String) =
         countType(
             type,
             grid[item.above()],
             grid[item.below()],
         )
 
-    fun touchCountDiagonal(item: Item, type: String) =
+    private fun touchCountDiagonal(item: Item, type: String) =
         countType(
             type,
             grid[item.aboveAndRight()],
@@ -201,7 +201,7 @@ sealed class Item(
         return items.any { it.touches(location) }
     }
 
-    fun touches(otherLocation: Location) =
+    private fun touches(otherLocation: Location) =
         location.touches(otherLocation)
 
     fun left() =

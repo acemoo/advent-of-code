@@ -1,6 +1,8 @@
 import kotlin.time.Duration
 
-class Year {
+class Year(
+    private val year: Int
+) {
     private val days = mutableListOf<Day>()
 
     fun add(day: Day) {
@@ -14,7 +16,7 @@ class Year {
                 sum + element
             }
         println("".padEnd(72, '-'))
-        println(totalTime.toString().padStart(72))
+        println("$year total:  ${"".padEnd(46)} ${totalTime.toString().padStart(12)}")
         println()
         println()
     }

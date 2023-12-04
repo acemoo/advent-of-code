@@ -1,7 +1,6 @@
 package year_2022
 
 class Day3: Day(3) {
-    @OptIn(ExperimentalStdlibApi::class)
     override fun solvePart1(input: List<String>) =
         input.sumOf { line ->
             val compartmentSize = line.length / 2

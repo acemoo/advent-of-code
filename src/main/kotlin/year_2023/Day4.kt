@@ -32,7 +32,7 @@ data class Cards(
         return this
     }
 
-    fun processCard(id: Int) {
+    private fun processCard(id: Int) {
         val card = cards.getValue(id)
         card.getWinningCardIds()
             .forEach { gainingId ->
@@ -56,12 +56,10 @@ data class Card(
     companion object {
         fun parseLine(line: String): Card {
             val numbers = line.substring(5).split(":", "|")
-                .map {
-                    it.trim().split(" ")
+                .map { cardPart ->
+                    cardPart.trim().split(" ")
                         .filter(String::isNotBlank)
-                        .map {
-                            it.toInt()
-                        }
+                        .map(String::toInt)
                 }
 
             return Card(

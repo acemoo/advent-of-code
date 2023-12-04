@@ -83,10 +83,6 @@ class Day7: Day(7) {
             return this
         }
 
-        fun printTree() {
-            print(0)
-        }
-
         override fun print(depth: Int) {
             println("${getIdent(depth)}- $name (dir)")
             files.forEach {it.print(depth + 1) }
@@ -103,6 +99,7 @@ class Day7: Day(7) {
             }
         }
 
+        @Suppress("ConvertCallChainIntoSequence")
         fun getSizeOfSmallestFolderWithAtLeast(minimumSize: Int): Int? =
             files.filterIsInstance<Folder>()
                 .mapNotNull { it.getSizeOfSmallestFolderWithAtLeast(minimumSize) }

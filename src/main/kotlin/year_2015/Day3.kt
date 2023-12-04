@@ -15,17 +15,14 @@ class Day3: Day(3) {
         return houses.getVisitedCount()
     }
 
-    private fun toDirection(char: Char) = if (char == '>') {
-        Direction.EAST
-    } else if (char == '<') {
-        Direction.WEST
-    } else if (char == 'v') {
-        Direction.SOUTH
-    } else if (char == '^') {
-        Direction.NORTH
-    } else {
-        throw Exception("Invalid direction")
-    }
+    private fun toDirection(char: Char) =
+        when (char) {
+            '>' -> Direction.EAST
+            '<' -> Direction.WEST
+            'v' -> Direction.SOUTH
+            '^' -> Direction.NORTH
+            else -> throw Exception("Invalid direction")
+        }
 
     override fun solvePart2(input: List<String>): Any {
         TODO("Not yet implemented")

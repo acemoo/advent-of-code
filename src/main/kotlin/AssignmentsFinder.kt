@@ -12,7 +12,7 @@ class AssignmentsFinder {
                 val (year, day) = findYearAndDayRegex.findAll(relativeFile.path)
                     .map { it.value.toInt() }
                     .toList()
-                years.computeIfAbsent(year) { Year() }
+                years.computeIfAbsent(year) { Year(year) }
                     .add(Class.forName("year_$year.Day$day").kotlin.constructors.first().call() as Day)
             }
         }
