@@ -9,8 +9,9 @@ class Day5: Day(5) {
             .findLowest()
 
     override fun solvePart2(input: List<String>) =
-        Almanac.parseLines(input)
-            .findLowestViaRanges()
+        "Disabled for being too slow (5+ minutes)"
+//        Almanac.parseLines(input)
+//            .findLowestViaRanges()
 }
 
 data class Almanac(
