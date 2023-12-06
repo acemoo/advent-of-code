@@ -7,7 +7,7 @@ class Day6: Day(6) {
 
     override fun solvePart2(input: List<String>) =
         Race.parseLines(input)
-            .calculateValidOptionsCount()
+            .findValidOptionCount()
 }
 
 data class Races(
@@ -15,7 +15,7 @@ data class Races(
 ) {
     fun numberOfWaysToBeatTheRecord() =
         races.fold(1) { acc: Long, race: Race ->
-            acc * race.calculateValidOptionsCount()
+            acc * race.findValidOptionCount()
         }
 
 
@@ -38,14 +38,19 @@ data class Race(
     val timeLimit: Long,
     val highScore: Long,
 ) {
-    fun calculateValidOptions(): List<Long> =
+    fun findValidOptionCount() =
+        findHighestValidOption() - findLowestValidOption() + 1
+    fun findLowestValidOption() =
         (1 ..< timeLimit)
-            .filter { holdTime ->
+            .first { holdTime ->
                 (timeLimit - holdTime) * holdTime > highScore
             }
 
-    fun calculateValidOptionsCount() =
-        calculateValidOptions().size
+    fun findHighestValidOption() =
+        (timeLimit downTo 1)
+            .first { holdTime ->
+                (timeLimit - holdTime) * holdTime > highScore
+            }
 
     companion object {
       private fun lineToNumber(line: String) =

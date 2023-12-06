@@ -2,17 +2,15 @@ package year_2023
 
 import AbstractDayTest
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.TestFactory
 
 class Day6Test:
 AbstractDayTest(
     Day6(),
-    288,
-    71503
+    288L,
+    71503L
 ) {
-    val input = """
+    private val input = """
             Time:      7  15   30
             Distance:  9  40  200
         """.trimIndent().split("\n")
@@ -32,19 +30,9 @@ AbstractDayTest(
         )
     }
 
-    @TestFactory
-    fun calculateValidOptions() =
-        listOf(
-            Race(7, 9) to listOf(2, 3, 4, 5),
-        ).map { (input, expected) ->
-            DynamicTest.dynamicTest("$input should have $expected as valid options") {
-                assertThat(input.calculateValidOptions()).isEqualTo(expected)
-            }
-        }
-
     @Test
     fun calculateValidOptionsCount() {
-        assertThat(Race(7, 9).calculateValidOptionsCount()).isEqualTo(4)
+        assertThat(Race(7, 9).findLowestValidOption()).isEqualTo(4)
     }
 
     @Test
@@ -52,5 +40,15 @@ AbstractDayTest(
         assertThat(Race.parseLines(input)).isEqualTo(
             Race(71530, 940200)
         )
+    }
+
+    @Test
+    fun findLowestValidOption() {
+        assertThat(Race(7, 9).findLowestValidOption()).isEqualTo(2)
+    }
+
+    @Test
+    fun findHighestValidOption() {
+        assertThat(Race(7, 9).findHighestValidOption()).isEqualTo(5)
     }
 }
