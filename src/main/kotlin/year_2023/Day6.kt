@@ -40,6 +40,7 @@ data class Race(
 ) {
     fun findValidOptionCount() =
         findHighestValidOption() - findLowestValidOption() + 1
+
     fun findLowestValidOption() =
         (1 ..< timeLimit)
             .first { holdTime ->
