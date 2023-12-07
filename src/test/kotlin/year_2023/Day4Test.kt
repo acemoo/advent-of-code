@@ -4,6 +4,8 @@ import AbstractDayTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.TestFactory
+import year_2023.Day4.Card
+import year_2023.Day4.Cards
 
 class Day4Test:
     AbstractDayTest(
