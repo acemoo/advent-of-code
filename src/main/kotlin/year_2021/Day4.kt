@@ -1,6 +1,6 @@
 package year_2021
 
-import groupConsecutiveBy
+import utils.groupConsecutiveBy
 
 class Day4: Day(4) {
     override fun solvePart1(input: List<String>): Any {

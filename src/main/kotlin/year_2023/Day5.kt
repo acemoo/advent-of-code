@@ -1,6 +1,6 @@
 package year_2023
 
-import groupConsecutiveBy
+import utils.groupConsecutiveBy
 import kotlin.math.min
 
 class Day5: Day(5) {

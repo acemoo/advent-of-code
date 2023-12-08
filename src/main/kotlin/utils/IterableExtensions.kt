@@ -1,3 +1,4 @@
+package utils
 fun <T> Iterable<T>.groupConsecutiveBy(predicate: (T) -> Boolean) : List<List<T>> {
     var leftToGroup = this.toList()
     val groups = mutableListOf<List<T>>()
