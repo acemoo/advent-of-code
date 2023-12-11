@@ -1,10 +1,10 @@
 package utils.grid
 
-data class ItemGroup(
+data class ItemGroup<T: Item>(
     val type: String,
-    val items: MutableList<Item> = mutableListOf(), //TODO: can we make this immutable?
+    val items: MutableList<T> = mutableListOf(), //TODO: can we make this immutable?
 ) {
-    fun add(item: Item) {
+    fun add(item: T) {
         items.add(item)
     }
 }

@@ -1,32 +1,36 @@
 package utils.grid
 
+import kotlin.math.max
 
-open class Grid(
-    val grid: Map<Location, Item>, //TODO: optimise by using a nested list
+
+open class Grid<T: Item>(
+    val grid: Map<Location, T>, //TODO: optimise by using a nested list
+    val maxX: Int,
+    val maxY: Int,
 ) {
-    fun touches(item: Item, type: String) =
+    fun touches(item: T, type: String) =
         touchCount(item, type) > 0
 
-    private fun touchCount(item: Item, type: String) =
+    private fun touchCount(item: T, type: String) =
         touchCountHorizontal(item, type) +
                 touchCountVertical(item, type) +
                 touchCountDiagonal(item, type)
 
-    private fun touchCountHorizontal(item: Item, type: String) =
+    private fun touchCountHorizontal(item: T, type: String) =
         countType(
             type,
             grid[item.left()],
             grid[item.right()],
         )
 
-    private fun touchCountVertical(item: Item, type: String) =
+    private fun touchCountVertical(item: T, type: String) =
         countType(
             type,
             grid[item.above()],
             grid[item.below()],
         )
 
-    private fun touchCountDiagonal(item: Item, type: String) =
+    private fun touchCountDiagonal(item: T, type: String) =
         countType(
             type,
             grid[item.aboveAndRight()],
@@ -35,29 +39,41 @@ open class Grid(
             grid[item.belowAndLeft()],
         )
 
-    private fun countType(type: String, vararg items: Item?) =
+    fun getHorizontalOrVerticalSurroundingItems(item: T) =
+        listOfNotNull(
+            grid[item.above()],
+            grid[item.below()],
+            grid[item.left()],
+            grid[item.right()],
+        )
+
+    private fun countType(type: String, vararg items: T?) =
         items.count { it?.type == type }
 
 
-    interface GridBuilder {
-        fun addItem(item: Item): GridBuilder
+    interface GridBuilder<T: Item> {
+        fun addItem(item: T): GridBuilder<T>
 
-        fun build(): Grid
+        fun build(): Grid<T>
     }
 
-    class Builder: GridBuilder {
-        private val grid = mutableMapOf<Location, Item>()
+    class Builder<T: Item>: GridBuilder<T> {
+        private val grid = mutableMapOf<Location, T>()
+        private var maxX = 0
+        private var maxY = 0
 
-        override fun addItem(item: Item) = apply {
+        override fun addItem(item: T) = apply {
+            maxX = max(item.location.x, maxX)
+            maxY = max(item.location.y, maxY)
             grid[item.location] = item
         }
 
         override fun build() =
-            Grid(grid)
+            Grid<T>(grid, maxX, maxY)
     }
 
     companion object {
-        fun parseLines(lines: List<String>, builder: GridBuilder, mapper: (Char, Location) -> Item): Grid {
+        fun <T: Item> parseLines(lines: List<String>, builder: GridBuilder<T>, mapper: (Char, Location) -> T): Grid<T> {
             lines.forEachIndexed { x, line ->
                 line.forEachIndexed { y, char ->
                     builder.addItem(
@@ -68,4 +84,18 @@ open class Grid(
             return builder.build()
         }
     }
+
+    override fun toString() =
+        buildString {
+            (0 .. maxX ).forEach { x ->
+                (0 .. maxY).forEach { y ->
+                    val location = Location(x, y)
+                    append((grid[location] ?: EmptyItem(location)).type)
+                }
+                this.appendLine()
+            }
+        }
+
+    fun getItemOrNull(location: Location?) =
+        grid[location]
 }

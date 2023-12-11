@@ -18,13 +18,13 @@ class Day3 : Day(3) {
 }
 
 data class Schematic(
-    val grid: Grid,
+    val grid: Grid<Item>,
     val numbers: List<Number>,
     val symbols: List<Symbol>,
 ) {
     companion object {
         fun parseLines(lines: List<String>): Schematic {
-            val grid: GroupedGrid = Grid.parseLines(lines, GroupedGrid.Builder()) { char, location ->
+            val grid: GroupedGrid<Item> = Grid.parseLines(lines, GroupedGrid.Builder()) { char, location ->
                 when {
                     char.isDigit() -> Digit(location, char.digitToInt())
                     char == '.' -> Dot(location)
