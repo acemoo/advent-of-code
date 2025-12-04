@@ -1,6 +1,5 @@
 package year_2025
 
-import utils.grid.EmptyItem
 import utils.grid.Grid
 import utils.grid.Item
 import utils.grid.Location
@@ -23,18 +22,14 @@ class Day4: Day(4) {
         val floor = Grid.parseLines(input, Grid.Builder()) { c: Char, location: Location ->
             when (c) {
                 '@' -> RollOfPaper(location)
-                '.' -> EmptyItem(location)
+                '.' -> null
                 else -> throw IllegalArgumentException("Invalid character '$c'")
             }
         }
 
         fun findAccessibleRollsOfPaper() =
              floor.grid.filter { (_, item) ->
-                if (item is RollOfPaper) {
-                    floor.touchCount(item, "@") < 4
-                } else {
-                    false
-                }
+                 floor.touchCount(item, "@") < 4
             }
 
         fun removeAndCountAllAccessibleRollsOfPaper(): PrintingDepartment {

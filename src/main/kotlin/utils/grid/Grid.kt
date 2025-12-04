@@ -73,12 +73,13 @@ open class Grid<T: Item>(
     }
 
     companion object {
-        fun <T: Item> parseLines(lines: List<String>, builder: GridBuilder<T>, mapper: (Char, Location) -> T): Grid<T> {
+        fun <T: Item> parseLines(lines: List<String>, builder: GridBuilder<T>, mapper: (Char, Location) -> T?): Grid<T> {
             lines.forEachIndexed { x, line ->
                 line.forEachIndexed { y, char ->
-                    builder.addItem(
-                        mapper.invoke(char, Location(x, y))
-                    )
+                    val item = mapper.invoke(char, Location(x, y))
+                    if (item != null) {
+                        builder.addItem(item)
+                    }
                 }
             }
             return builder.build()
