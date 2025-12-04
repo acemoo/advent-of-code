@@ -3,7 +3,7 @@ package utils.grid
 import kotlin.math.max
 
 class GroupedGrid<T: Item>(
-    grid: Map<Location, T>,
+    grid: MutableMap<Location, T>,
     maxX: Int,
     maxY: Int,
     val itemGroups: ItemGroups<T>

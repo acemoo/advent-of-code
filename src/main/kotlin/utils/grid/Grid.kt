@@ -4,14 +4,14 @@ import kotlin.math.max
 
 
 open class Grid<T: Item>(
-    val grid: Map<Location, T>, //TODO: optimise by using a nested list
+    val grid: MutableMap<Location, T>, //TODO: optimise by using a nested list
     val maxX: Int,
     val maxY: Int,
 ) {
     fun touches(item: T, type: String) =
         touchCount(item, type) > 0
 
-    private fun touchCount(item: T, type: String) =
+    fun touchCount(item: T, type: String) =
         touchCountHorizontal(item, type) +
                 touchCountVertical(item, type) +
                 touchCountDiagonal(item, type)
